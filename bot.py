@@ -28,9 +28,14 @@ async def start(event):
 @client.on(events.NewMessage())
 async def contact(event):
     user_id = event.message.peer_id.user_id
-    print(user_id)
     if event.message.media:
         contact_user_id = event.message.media.user_id
-        print(event.message.media.phone_number)
+        # check if user really send his number
+        if contact_user_id == user_id:
+            print("number recieved")
+            print(event.message.media.phone_number)
+        else:
+            await event.respond('This is not your number')
+
 # Run the bot
 client.run_until_disconnected()
